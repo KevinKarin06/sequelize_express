@@ -1,34 +1,27 @@
-const { Sequelize, DataTypes } = require("sequelize");
-
-const constants = require("../constants");
-const sequelize = new Sequelize(
-    constants.database,
-    constants.user,
-    constants.password,
+const UserModel = (sequelize, DataTypes) => {
+  const UserModel = sequelize.define(
+    "UserModel",
     {
-      dialect: "mariadb",
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+        unique: true,
+      },
+      phone: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique: true,
+      },
+    },
+    {
+      tableName: "users",
     }
   );
-
-const UserModel = sequelize.define(
-  "UserModel",
-  {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      defaultValue: null,
-    },
-    phone: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  },
-  {
-    tableName: "users",
-  }
-);
+  return UserModel;
+};
 
 module.exports = UserModel;
