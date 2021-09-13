@@ -25,7 +25,7 @@ const updateUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     users = await UserModel.findAll();
-    res.status(201).json({ message: "created", data: users });
+    res.status(201).json({ message: "Request was Successful", data: users });
   } catch (error) {
     res.status(500).json({ error: error });
   }
