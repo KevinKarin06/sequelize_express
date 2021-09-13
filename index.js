@@ -3,14 +3,14 @@ const app = express();
 const routes = require("./routes/routes");
 const constants = require("./constants");
 const db = require("./models");
-db.sequelize
-  .sync({alter:true})
-  .then(() => {
-    console.log("Drop and Synced");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// db.sequelize
+//   .sync({alter:true})
+//   .then(() => {
+//     console.log("Drop and Synced");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

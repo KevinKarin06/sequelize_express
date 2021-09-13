@@ -15,6 +15,9 @@ const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
+        validate: {
+          notNull: true,
+        },
       },
     },
     {
