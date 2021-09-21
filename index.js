@@ -3,6 +3,7 @@ const app = express();
 const routes = require("./routes/routes");
 const constants = require("./constants");
 const db = require("./models");
+express.static("uploads", []);
 // db.sequelize
 //   .sync({alter:true})
 //   .then(() => {
@@ -12,6 +13,7 @@ const db = require("./models");
 //     console.log(err);
 //   });
 
+app.use(express.static("upload"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);

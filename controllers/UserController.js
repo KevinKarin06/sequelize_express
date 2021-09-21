@@ -22,9 +22,10 @@ class UserController extends BaseController {
   };
   newUser = async (req, res) => {
     try {
-      const data = req.body;
+      let data = req.body;
+      data.avatar = req.file.path;
       const resp = await super.create(data);
-      console.log("usercontroller", resp);
+      console.log("usercontroller", req.file);
       if (resp.data != null && resp.error === null) {
         res
           .status(201)
@@ -42,7 +43,7 @@ class UserController extends BaseController {
       const resp = await super.getById(id);
       if (resp.data != null && resp.error === null) {
         res
-          .status(201)
+          .status(200)
           .json({ message: "Request was Successful", data: resp.data });
       } else {
         res.status(500).json({ message: "Internal  Error", error: resp.error });
@@ -67,7 +68,7 @@ class UserController extends BaseController {
     }
   };
   updateUser = async (req, res) => {
-      console.log('update method from user contrller');
+    console.log("update method from user contrller");
     try {
       const id = req.params.id;
       const data = req.body;
@@ -94,10 +95,12 @@ class UserController extends BaseController {
           phone: phone,
         },
       });
-      if (true) {
-        res.status(201).json({ message: "Request was Successful", data: resp });
+      if (resp.length > 0) {
+        res.status(200).json({ message: "Request was Successful", data: resp });
       } else {
-        res.status(500).json({ message: "Internal  Error", error: "Error" });
+        res
+          .status(404)
+          .json({ message: "Unable to process", error: "User Not Found" });
       }
     } catch (error) {
       res.status(500).json({ message: "Internal Server Error", error: error });

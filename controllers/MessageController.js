@@ -10,9 +10,7 @@ class MessageController extends BaseController {
     try {
       const resp = await super.getAll();
       if (resp.data != null) {
-        res
-          .status(200)
-          .json({ message: "Request was Successful", data: resp.data });
+        res.status(200).json({ message: "Request was Successful", data: resp.data });
       } else {
         res.status(500).json({ error: resp.error });
       }
@@ -72,7 +70,7 @@ class MessageController extends BaseController {
       const resp = await super.getById(id);
       if (resp.data != null && resp.error === null) {
         res
-          .status(201)
+          .status(200)
           .json({ message: "Request was Successful", data: resp.data });
       } else {
         res.status(500).json({ message: "Internal  Error", error: resp.error });
@@ -85,7 +83,7 @@ class MessageController extends BaseController {
     try {
       const id = req.params.id;
       const resp = await super.getModel().findAll({ where: { user_id: id } });
-      res.status(201).json({ message: "Request was Successful", data: resp });
+      res.status(200).json({ message: "Request was Successful", data: resp });
     } catch (error) {
       res.status(500).json({ message: "Internal Server Error", error: error });
     }
