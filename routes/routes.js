@@ -33,7 +33,7 @@ routes.post("/user", upload.single("avatar"), userController.newUser);
 routes.get("/user", userController.getAllUser);
 routes.get("/user/:id", userController.getUser);
 routes.delete("/user/:id", userController.deleteUser);
-routes.put("/user/:id", userController.updateUser);
+routes.put("/user/:id", upload.single("avatar"), userController.updateUser);
 routes.post("/user/login", userController.login);
 
 //message

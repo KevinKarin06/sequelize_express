@@ -68,10 +68,13 @@ class UserController extends BaseController {
     }
   };
   updateUser = async (req, res) => {
-    console.log("update method from user contrller");
     try {
       const id = req.params.id;
       const data = req.body;
+      if (req.file != undefined) {
+        console.log("update method from user contrller", req.file);
+        data.avatar = req.file.path;
+      }
       const resp = await super.update(id, data);
       if (resp.data != null && resp.error === null) {
         res
