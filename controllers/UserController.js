@@ -99,11 +99,18 @@ class UserController extends BaseController {
         },
       });
       if (resp.length > 0) {
-        res.status(200).json({ message: "Request was Successful", data: resp });
+        res.status(200).json({ message: "Request was Successful", data: resp[0] });
       } else {
-        res
-          .status(404)
-          .json({ message: "Unable to process", error: "User Not Found" });
+        let resp = await super.create(data);
+        if (resp.data != null && resp.error === null) {
+          res
+            .status(201)
+            .json({ message: "Request was Successful", data: resp.data });
+        } else {
+          res
+            .status(500)
+            .json({ message: "Internal  Error", error: resp.error });
+        }
       }
     } catch (error) {
       res.status(500).json({ message: "Internal Server Error", error: error });
