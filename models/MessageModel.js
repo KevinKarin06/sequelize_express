@@ -18,6 +18,11 @@ const MessageModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      user: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue:'Anonymous'
+      },
       read: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,

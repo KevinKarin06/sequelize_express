@@ -21,11 +21,10 @@ class MessageController extends BaseController {
   newMessage = async (req, res) => {
     try {
       const data = req.body;
+      data.user = `Anonymous${req.ip}`;
       const resp = await super.create(data);
       if (resp.data != null && resp.error === null) {
-        res
-          .status(201)
-          .json({ message: "Request was Successful", data: resp.data });
+        res.status(201).json({ message: "Request was Successful", data: resp.data });
       } else {
         res.status(500).json({ message: "Internal  Error", error: resp.error });
       }
