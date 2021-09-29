@@ -1,5 +1,7 @@
 const db = require("../models/index");
 const BaseController = require("./BaseController");
+const Utils = require("../utils");
+utils = new Utils();
 
 class MessageController extends BaseController {
   constructor() {
@@ -10,7 +12,9 @@ class MessageController extends BaseController {
     try {
       const resp = await super.getAll();
       if (resp.data != null) {
-        res.status(200).json({ message: "Request was Successful", data: resp.data });
+        res
+          .status(200)
+          .json({ message: "Request was Successful", data: resp.data });
       } else {
         res.status(500).json({ error: resp.error });
       }
@@ -21,10 +25,12 @@ class MessageController extends BaseController {
   newMessage = async (req, res) => {
     try {
       const data = req.body;
-      data.user = `Anonymous${req.ip}`;
+      data.user = `Anonymous${utils.generateString(5)}`;
       const resp = await super.create(data);
       if (resp.data != null && resp.error === null) {
-        res.status(201).json({ message: "Request was Successful", data: resp.data });
+        res
+          .status(201)
+          .json({ message: "Request was Successful", data: resp.data });
       } else {
         res.status(500).json({ message: "Internal  Error", error: resp.error });
       }
@@ -81,7 +87,13 @@ class MessageController extends BaseController {
   getMessagesByUser = async (req, res) => {
     try {
       const id = req.params.id;
-      const resp = await super.getModel().findAll({ where: { user_id: id } });
+      const resp = await super.getModel().findAll({
+        where: { user_id: id },
+        order: [
+          ["read", "ASC"],
+          ["createdAt", "DESC"],
+        ],
+      });
       res.status(200).json({ message: "Request was Successful", data: resp });
     } catch (error) {
       res.status(500).json({ message: "Internal Server Error", error: error });

@@ -15,7 +15,7 @@ const MessageModel = (sequelize, DataTypes) => {
         // }
       },
       message: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       user: {
