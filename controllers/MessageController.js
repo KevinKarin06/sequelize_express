@@ -25,7 +25,7 @@ class MessageController extends BaseController {
   newMessage = async (req, res) => {
     try {
       const data = req.body;
-      data.user = `Anonymous${utils.generateString(5)}`;
+      data.user = `Anonymous${utils.generateString(7)}`;
       const resp = await super.create(data);
       if (resp.data != null && resp.error === null) {
         res
